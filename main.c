@@ -10,7 +10,7 @@
 /*STRUCT DECLARATIONS*/
 typedef struct Ogrenci { char ogrID[9]; char ad[30]; char soyad[30]; int puan; struct Ogrenci *next; struct Ogrenci *prev;} Ogrenci;
 typedef struct Yazar { int yazarID; char yazarAd[30]; char yazarSoyad[30]; struct Yazar *next;}Yazar;
-typedef struct KitapOrnek { char EtiketNo[20]; char Durum[8]; struct KitapOrnek *next;} KitapOrnek;
+typedef struct KitapOrnek { char EtiketNo[20]; char Durum[9]; struct KitapOrnek *next;} KitapOrnek;
 typedef struct Kitap {char kitapAdi[30]; char ISBN[14]; int adet; struct Kitap *next; struct KitapOrnek *head;} Kitap;
 typedef struct Tarih{ unsigned int gun:5; unsigned int ay:4; unsigned int yil:12;} Tarih;
 typedef struct KitapOdunc{ char EtiketNo[20]; char ogrID[9]; int islemTipi:2; struct Tarih islemTarihi;} KitapOdunc;
@@ -43,8 +43,8 @@ Yazar* findYazar(int yazarID,ListYazar* list);
 /***KÝTAPLAR***/
 ListKitap* createListKitap();
 Kitap* createNodeKitap(char kitapAdi[30], char ISBN[14],int adet);
-KitapOrnek* createOrnekKitapNode(KitapOdunc* koArray,int* kitapOduncCounter,char ISBN[14],char Durum[8],int i);
-void addOrnekKitap(KitapOdunc* koArray,int* kitapOduncCounter,char Durum[8],int i,Kitap* kitap);
+KitapOrnek* createOrnekKitapNode(KitapOdunc* koArray,int* kitapOduncCounter,char ISBN[14],char Durum[],int i);
+void addOrnekKitap(KitapOdunc* koArray,int* kitapOduncCounter,char Durum[9],int i,Kitap* kitap);
 Kitap* addKitap(KitapOdunc* koArray,int* kitapOduncCounter,char kitapAdi[30], char ISBN[14], int adet,ListKitap* list) ;
 void displayOrnekKitaplar(Kitap* kitap);
 void displayKitaplar(ListKitap* list);
@@ -669,7 +669,7 @@ void loopOrnekKitap(KitapOdunc* koArray,int* kitapOduncCounter,Kitap* kitap) {
 	}
 }
 
-void addOrnekKitap(KitapOdunc* koArray,int* kitapOduncCounter,char Durum[8],int i,Kitap* kitap) {
+void addOrnekKitap(KitapOdunc* koArray,int* kitapOduncCounter,char Durum[9],int i,Kitap* kitap) {
 	KitapOrnek* current = NULL;
 	if(kitap->head == NULL) {
 		kitap->head = createOrnekKitapNode(koArray,kitapOduncCounter,kitap->ISBN,Durum,i);
@@ -701,7 +701,7 @@ void deleteNodeKitap(ListKitap* list,char ISBN[14]) {
 	}
 }
 
-KitapOrnek* createOrnekKitapNode(KitapOdunc* koArray,int* kitapOduncCounter,char ISBN[14],char Durum[8],int i) {
+KitapOrnek* createOrnekKitapNode(KitapOdunc* koArray,int* kitapOduncCounter,char ISBN[14],char Durum[9],int i) {
 	int v;
 	KitapOrnek* n = malloc(sizeof(KitapOrnek));
 	if(!n) {
